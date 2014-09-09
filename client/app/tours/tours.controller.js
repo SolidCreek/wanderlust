@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; 
 
 angular.module('wanderlustApp')
 
@@ -51,7 +51,7 @@ angular.module('wanderlustApp')
     });
 
     //route to tour on click
-    $scope.selectedTour = function(){
-        $location.path('/tours/showtour');
+    $scope.selectedTour = function(tour){
+        $location.path('/tours/showtour/' + tour._id);
     };
   });

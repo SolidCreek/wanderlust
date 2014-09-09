@@ -2,43 +2,39 @@
 
 angular.module('wanderlustApp')
 
-  .factory('GoExplore', function(){
+  .factory('GoExplore', function($http){
     //this function activates on ng-click for the button "Go Exploring!"
+    var glhf = function(){
+      alert('good luck, have fun!');      
+    };
+
+    var getTour = function(tourId, callback){
+      console.log(tourId)
+      $http({
+        method: 'GET',
+        url: '/api/tour/'+tourId
+      })
+      .success(function(data){
+          callback(data);
+      });
+    };
+
     return {
-      glhf: function(){
-        alert('good luck, have fun!');
-      }
+      getTour: getTour,
+      glhf: glhf
+      
     };
   })
 
-  .controller('ShowtourCtrl', function ($scope, GoExplore) {
+  .controller('ShowtourCtrl', function ($scope, GoExplore, $stateParams) {
 
     $scope.glhf = GoExplore.glhf;
 
     //Temp data for a tour
-    $scope.tours = {
-      name: 'The Mission Mission',
-      author: 'Ash Ketchum',
-      length: 'all day',
-      description: 'Note all clues hitherto are bounded by the following streets: 16th and 26th and Dolores and one after Balmy (referred to as The Mission). Hint: a majority of the spots lie on or very close to Valencia. The attendees of the scavenger hunt will be referred to as the “Scavengers”. DISCLAIMER: once The Hunt has begun, the use of any smartphone technology for navigational purposes will be frowned upon.',
-      spots: {
-        1: {
-          number: 1,
-          info: 'Obtain a wooden sword from a pirate shop',
-          points: '10'
-        },
-        2: {
-          number: 2,
-          info: 'Find the following graffiti',
-          points: '5'
-        },
-        3: {
-          number: 3,
-          info: 'Catch Pikachu',
-          points: '20'
-        }
-      }
 
-    };
+
+    GoExplore.getTour($stateParams.tourId, function(data){
+      $scope.tours = data;
+    });
 
   });
