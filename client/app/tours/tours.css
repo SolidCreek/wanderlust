@@ -49,9 +49,9 @@
 }
 
 
-.containerTours {
-  text-align: -webkit-center;
-  width: 75%;
+.containerTours .tourFilter{
+  /*text-align: -webkit-center;*/
+  width: 75vw;
   margin: 0 auto;
 }
 
