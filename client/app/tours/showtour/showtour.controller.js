@@ -9,7 +9,6 @@ angular.module('wanderlustApp')
     };
 
     var getTour = function(tourId, callback){
-      console.log(tourId)
       $http({
         method: 'GET',
         url: '/api/tour/'+tourId
