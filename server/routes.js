@@ -5,19 +5,19 @@
 'use strict';
 
 var errors = require('./components/errors');
-var tour = require('./api/tour/index.js');
+var tour = require('./api/tour/tour.controller');
 
 module.exports = function(app) {
 
   // Insert routes below
   app.use('/api/city', require('./api/city'));
-  // app.use('/api/tours', require('./api/tour'));
+  app.use('/api/tours', require('./api/tour'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));
 
-  app.get('/api/tours/:id', function(req, res){
-    tour.index.(req, res);
+  app.get('/api/tour/:id', function(req, res){
+    tour.show(req, res);
   });
 
   // All undefined asset or api routes should return a 404
