@@ -1,4 +1,4 @@
-<div ng-include="'components/navbar/navbar.html'"></div> 
+<div ng-include="'components/navbar/navbar.html'"></div>
 
 <header class="hero-unit" id="banner">
   <div class="container">
@@ -14,13 +14,14 @@
   </div>
 </div>
 <div>
-  
+
 </div>
 <div class="tourFilter">
   <div class="input-group">
     <input type="text" class="form-control" name="filterBox" placeholder="Filter tours..." ng-model="tourFilter">
   </div>
 </div>
+<div class="tourContainer">
   <div class="containerTours" ng-repeat="tour in tours | filter: tourFilter">
     <div class="tourView" ng-click="selectedTour(tour)">
       <img class="map" src="assets/images/{{tour.neighborhood[0]}}.png" alt="Mission District">
@@ -39,7 +40,7 @@
       </div>
     </div>
   </div>
-
+</div>
 
 <div class="row">
   <footer class="footer">
