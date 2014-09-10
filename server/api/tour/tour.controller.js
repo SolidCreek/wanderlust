@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Tour = require('./tour.model');
+var User = require('../user/user.model')
 
 // Get list of tours
 exports.index = function(req, res) {
@@ -14,10 +15,18 @@ exports.index = function(req, res) {
 // Get a single tour
 exports.show = function(req, res) {
   Tour.findById(req.params.id).exec()
-      .then(function(tour){
-        console.log(tour)
+    .then(function(tour){
         if(!tour) {return res.send(404);}
-        return res.json(200,tour);
+        User.findById(tour.author).exec()
+          .then(function(user){
+            var tourObj = {
+              tour: tour,
+              author: user.name,
+              authorId: tour.author
+            }
+            console.log(tourObj);
+            return res.json(200, tourObj);
+          })
       });
 };
 
