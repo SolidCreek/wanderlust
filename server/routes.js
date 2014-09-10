@@ -17,7 +17,7 @@ module.exports = function(app) {
   app.use('/auth', require('./auth'));
 
   app.get('/api/tours/:id', function(req, res){
-    tour.index.(req, res)
+    tour.index.(req, res);
   });
 
   // All undefined asset or api routes should return a 404
