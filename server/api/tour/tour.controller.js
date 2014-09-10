@@ -15,6 +15,7 @@ exports.index = function(req, res) {
 exports.show = function(req, res) {
   Tour.findById(req.params.id).exec()
       .then(function(tour){
+        console.log(tour)
         if(!tour) {return res.send(404);}
         return res.json(200,tour);
       });
