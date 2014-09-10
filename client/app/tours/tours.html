@@ -13,22 +13,31 @@
     </div>
   </div>
 </div>
+<div>
 
-<div class="containerTours" ng-repeat="tour in tours">
-  <div class="tourView" ng-click="selectedTour()">
-    <img class="map" src="assets/images/{{tour.neighborhood[0]}}.png" alt="Mission District">
-    <div class="tourViewInfo">
-      <span>{{tour.title}}</span></br>
-      <span>{{tour.duration}}</span></br>
-      <!-- directives that add bootstrap icons -->
-      <star-Rating></star-Rating>
-      <star-Rating></star-Rating>
-      <star-Rating></star-Rating>
-      <star-Rating></star-Rating>
-      <star-Rating></star-Rating><br>
-      <tag-Price></tag-Price>
-      <tag-Camera></tag-Camera>
-      <tag-Tree></tag-Tree>
+</div>
+<div class="tourFilter">
+  <div class="input-group">
+    <input type="text" class="form-control" name="filterBox" placeholder="Filter tours..." ng-model="tourFilter">
+  </div>
+</div>
+<div class="tourContainer">
+  <div class="containerTours" ng-repeat="tour in tours | filter: tourFilter">
+    <div class="tourView" ng-click="selectedTour(tour)">
+      <img class="map" src="assets/images/{{tour.neighborhood[0]}}.png" alt="Mission District">
+      <div class="tourViewInfo">
+        <span>{{tour.title}}</span></br>
+        <span>{{tour.duration}}</span></br>
+        <!-- directives that add bootstrap icons -->
+        <star-Rating></star-Rating>
+        <star-Rating></star-Rating>
+        <star-Rating></star-Rating>
+        <star-Rating></star-Rating>
+        <star-Rating></star-Rating><br>
+        <tag-Price></tag-Price>
+        <tag-Camera></tag-Camera>
+        <tag-Tree></tag-Tree>
+      </div>
     </div>
   </div>
 </div>

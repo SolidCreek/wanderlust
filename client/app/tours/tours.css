@@ -1,7 +1,7 @@
-/*.thing-form {
+.thing-form {
   margin: 20px 0;
 }
-*/
+
 
 #banner {
   border-bottom: none;
@@ -48,10 +48,21 @@
   text-align: center;
 }
 
+.tourContainer, .tourFilter{
+  /*position: absolute;*/
+  width: 75vw;
+  height: auto;
+  display: inline-table;
+  margin: 10px 12.5vw 10px 12.5vw;
+}
 
-.containerTours {
+.tourFilter{
   text-align: -webkit-center;
-  width: 75%;
+}
+
+.containerTours{
+  text-align: -webkit-center;
+  /*position: absolute;*/
   margin: 0 auto;
 }
 
@@ -68,9 +79,10 @@
   text-align: right;
 }
 
-.containerAdventure {
+/*.containerAdventure {
   width: 75%;
   margin: 0 auto;
   text-align: -webkit-center;
   display: inline-block;
-}
+}*/
+
