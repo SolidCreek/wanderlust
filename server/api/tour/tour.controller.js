@@ -20,7 +20,8 @@ exports.show = function(req, res) {
           .then(function(user){
             var tourObj = {
               tour: tour,
-              author: user
+              author: user.name,
+              authorId: tour.author
             }
             console.log(tourObj);
             return res.json(200, tourObj);
