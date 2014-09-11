@@ -6,6 +6,7 @@
   </div>
 </header>
 
+<form name="tourForm" novalidate>
 <div class="container">
   <!-- Tour details -->
   <div class="row">
@@ -17,7 +18,7 @@
           </div>
           <div class="panel-body">
             <label>Title*</label>
-            <input class="form-control" type="text" ng-model="tour.title"><br>
+            <input class="form-control" ng-class="{'required': tourForm.title.$invalid}" tooltip="You must enter a tour name" tooltip-trigger="{{{true: 'mouseenter', false: 'mouseleave'}[tourForm.title.$invalid]}}" name="title" required type="text" ng-model="tour.title"><br>
             <label>Description</label>
             <input class="form-control" type="text" ng-model="tour.description"><br>
             <!-- Do this "the angular way" aka put in directive with more options -->
@@ -42,14 +43,16 @@
   <!-- Add spots by using wdl-spot directive, with spot attribute equal to spots[spotIndex] -->
   <h2>Add spots</h2>
   <div class="row">
+    <p class="error" ng-show="!spotsValid">You must have at least one spot</p>
     <div ng-repeat="spot in spots" class="col-md-4">
       <wdl-spot spot="spots[$index]"></wdl-spot>
     </div>
   </div>
+  </form>
 
   <!-- Buttons -->
   <div class="row buttons">
     <button class="btn btn-default" ng-click="addSpot()">Add Spot</button>
-    <button class="btn btn-default" ng-click="createTour()">Done!</button>
+    <button class="btn btn-default" ng-click="createTour()" ng-disabled="tourForm.$invalid" ng-disabled="tourForm.spotForm.$invalid">Done!</button>
   </row>
 </div>

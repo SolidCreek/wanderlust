@@ -2,6 +2,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">Spot details</div>
     <div class="panel-body">
+      <form name="spotForm" novalidate>
       <label>Tags</label>
       <label class="btn btn-xs btn-primary" ng-model="spot.free" btn-checkbox>Free</label>
       <label class="btn btn-xs btn-primary" ng-model="spot.paid" btn-checkbox>Paid</label>
@@ -12,7 +13,7 @@
       <label class="btn btn-xs btn-primary" ng-model="spot.food" btn-checkbox>Food</label>
       <label class="btn btn-xs btn-primary" ng-model="spot.drink" btn-checkbox>Drink</label><br>
 
-      <label>Task</label><input type="text" ng-model="spot.task"><br>
+      <label>Task</label><input ng-class="{'required': spotForm.task.$invalid}" tooltip="You must enter a task name" tooltip-trigger="{{{true: 'mouseenter', false: 'mouseleave'}[tourForm.title.$invalid]}}" name="task" required type="text" ng-model="spot.task"><br>
       <label>Address</label><input type="text" ng-model="spot.address"><br>
 
       <!-- Points -->
@@ -24,8 +25,11 @@
       </select><br>
 
       <!-- Picture upload -->
-      <label>Upload a picture (optional)</label>
-      <input type="file" ng-file-select="onFileSelect($files)">
+      <!-- <label>Upload a picture (optional)</label>
+      <input type="file" ng-file-select="onFileSelect($files)"> -->
+    </form>
+      <!--Remove spot-->
+      <label class="btn btn-xs btn-primary right" ng-click="removeSpot()">Remove</label>
     </div>
   </div>
 <!-- </div> -->
