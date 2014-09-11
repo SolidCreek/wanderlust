@@ -15,14 +15,16 @@ exports.index = function(req, res) {
 // Get a single tour
 exports.show = function(req, res) {
   Tour.findById(req.params.id).exec()
+      .then(function(tour){
         if(!tour) {return res.send(404);}
         User.findById(tour.author).exec()
           .then(function(user){
             var tourObj = {
               tour: tour,
-              author: user
+              author: user.name,
+              authorId: tour.author
             }
-            console.log(tourObj);
+            console.log(tourObj)
             return res.json(200, tourObj);
           })
       });
@@ -67,13 +69,13 @@ exports.destroy = function(req, res) {
 
 //Adds a review to a tour
 exports.addReview = function(req,res) {
-  if(req.body._id) {delete req.body._id;}
-  var reviewerID = {reviewer: req.user._id};
-  var review = _.merge(req.body, reviewerID);
+  console.log(req)
+  var reviewerID = {reviewer: req.userId};
+  var review = _.merge(req.body.data.review, reviewerID);
   Tour.findByIdAndUpdate(req.params.id,{$push:{reviews:review}},function(err,tour){
     if(err) {return handleError(res,err);}
     if(!tour) {return res.send(404);}
-    res.send(201);
+    res.send(201, tour);
   });
 };
 

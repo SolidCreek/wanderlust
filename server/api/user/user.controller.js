@@ -6,6 +6,35 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var Tour = require('../tour/tour.model');
 
+
+
+// var levelUp = function(req, res){
+//   var levelTable = {
+//     1: 0,
+//     2: 100,
+//     3: 300,
+//     4: 600,
+//     5: 1000,
+//     6: 1500,
+//     7: 2100,
+//     8: 2800,
+//     9: 3600,
+//     10: 4500
+//   }
+
+//   User.findByIdAndUpdate({level: level+1})
+//   var level = 
+//   var xp = user.profile.xp - levelTable[level];
+//   var userObj = {
+//     profile: user.profile,
+//     level: level,
+//     xp: xp
+//   }
+// }
+
+
+
+
 var validationError = function(res, err) {
   return res.json(422, err);
 };
@@ -40,13 +69,14 @@ exports.create = function (req, res, next) {
  */
 exports.show = function (req, res, next) {
   var userId = req.params.id;
-
   User.findById(userId, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
+    console.log(user.profile)
     res.json(user.profile);
   });
 };
+
 
 /**
  * Deletes a user
@@ -107,6 +137,9 @@ exports.showTours = function(req, res, next) {
     res.json(tours);
   });
 };
+
+//Calculate level and points
+
 
 
 /**

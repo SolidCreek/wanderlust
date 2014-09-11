@@ -20,7 +20,8 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   // github: {}
-  //add points
+  points: Number,
+  level: Number
 });
 
 /**
@@ -43,8 +44,9 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
+      'xp': this.points,
+      'level': this.level,
       'role': this.role
-      //points
     };
   });
 
