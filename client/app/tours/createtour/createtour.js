@@ -43,7 +43,7 @@ angular.module('wanderlustApp')
                 }).error(function(data) {
                   console.error(data);
                 });
-              };
+              });
             };
           }
         };
