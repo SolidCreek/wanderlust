@@ -2,7 +2,7 @@
 
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>{{tours.name}} - by {{tours.author}} - {{tours.length}}</h1>
+    <h1>{{tours.title}} - by {{tours.author}} - {{tours.duration}}</h1>
     <img class="map" src="assets/images/Mission.png" alt="Mission District">
     <p class="tour_header">{{tours.description}}</p>
   </div>
@@ -23,6 +23,37 @@
         </tr>
       </table>
 
+  </div>
+  <form class="form-horizontal row" role="form">
+    <div>
+      <strong>Score</strong>
+      <br>
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" ng-model="score" ngValue="1"> 1 Star
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" ng-model="score" ngValue="2"> 2 Star
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3" ng-model="score" ngValue="3"> 3 Star
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4" ng-model="score" ngValue="4"> 4 Star
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" checked id="inlineRadio5" value="5" ng-model="score" ngValue="5"> 5 Star
+      </label>
+      <br><strong>Review</strong>
+      <textarea class="form-control" rows="3" ng-model="reviewBody"></textarea>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-default" ng-click="submitReview()">Submit</button>
+    </div>
+  </form>
+  
+  <div class="reviewsContainer" ng-repeat="review in tours.reviews">
+    <span>{{review.body}}</span>
+    <span>{{review.rating}}</span>
   </div>
 </div>
 

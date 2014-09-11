@@ -27,7 +27,7 @@ angular.module('wanderlustApp')
               $upload.http({
                 url: 'https://api.imgur.com/3/image',
                 headers: {
-                  'Authorization': 'Client-ID 2b28684e6b6d23c',
+                  'Authorization': User.get()._id,
                   'Content-Type': file.type
                 },
                 data: e.target.result
