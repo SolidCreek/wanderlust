@@ -33,7 +33,7 @@ exports.points = function(req, res){
   var levelUp = function(user){
     var level = user.level+1
     var xp = user.xp - levelTable[level];
-    User.findByIdAndUpdate(user.id, {{level: level, xp: xp}}).exec()
+    User.findByIdAndUpdate(user.id, {level: level, xp: xp}).exec()
       .then(function(user){
         res.json(user);
       });
@@ -105,7 +105,7 @@ exports.show = function (req, res, next) {
       .then(function(tours){
         var userData = {
           profile: user.profile,
-          xpneeded: levelTable[user.profile.level]
+          xpneeded: levelTable[user.profile.level],
           tours: tours
         }
         console.log(userData)
