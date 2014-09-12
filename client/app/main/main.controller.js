@@ -18,8 +18,9 @@ angular.module('wanderlustApp')
     d3Interactor.intervalId = setInterval($scope._d3InteractorInterval, 250);
     $scope.navToToursByLocation = function() {
       // Value of $scope.location can be found in tours' $stateParams
+      var filter = $scope.location;
       console.log($scope.location);
-      $state.go('tours', $scope.location);
+      $state.go('toursFilter', {filter: filter});
     };
   });
 

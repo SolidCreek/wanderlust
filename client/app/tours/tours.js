@@ -7,5 +7,10 @@ angular.module('wanderlustApp')
         url: '/tours',
         templateUrl: 'app/tours/tours.html',
         controller: 'ToursCtrl'
+      })
+      .state('toursFilter', {
+        url: '/tours/:filter',
+        templateUrl: 'app/tours/tours.html',
+        controller: 'ToursCtrl'
       });
   });
