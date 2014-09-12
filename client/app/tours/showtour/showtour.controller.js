@@ -2,7 +2,7 @@
 
 angular.module('wanderlustApp')
 
-  .factory('GoExplore', function($http){
+  .factory('GoExplore', function($http, User){
     //this function activates on ng-click for the button "Go Exploring!"
     var glhf = function(){
       alert('good luck, have fun!');      
@@ -18,7 +18,34 @@ angular.module('wanderlustApp')
       });
     };
 
+    var submitReview = function(tourId, reviewObject, callback){
+      console.log("Submitted!");
+      User.get().$get().then(function(data){
+        if(reviewObject.body && reviewObject.rating && data._id){
+          console.log("Going to the server!");
+          $http({
+            method: 'POST',
+            url: '/api/tour/'+tourId,
+            data: {
+              userId: data._id,
+              review: reviewObject
+            }
+          })
+          .success(function(data){
+              callback(data);
+          });
+        } else {
+          console.log("tourId: ", tourId);
+          console.log("reviewObject: ", reviewObject);
+          console.log("data: ", data);
+          callback(null);
+      }
+      });
+      
+    };
+
     return {
+      submitReview: submitReview,
       getTour: getTour,
       glhf: glhf
       
@@ -26,14 +53,22 @@ angular.module('wanderlustApp')
   })
 
   .controller('ShowtourCtrl', function ($scope, GoExplore, $stateParams) {
-
     $scope.glhf = GoExplore.glhf;
-
-    //Temp data for a tour
-
 
     GoExplore.getTour($stateParams.tourId, function(data){
       $scope.tours = data;
     });
 
+    $scope.submitReview = function(){
+      var reviewData = {
+        body: $scope.reviewBody,
+        rating: $scope.score
+      };
+      var callback = function(data){
+       if(data){
+         $scope.tours = data;
+       }
+      };
+      GoExplore.submitReview($stateParams.tourId, reviewData, callback);      
+    };
   });
