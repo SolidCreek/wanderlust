@@ -21,6 +21,7 @@ var UserSchema = new Schema({
   google: {},
   // github: {}
   xp: Number,
+  reviews: [{body: String, rating: {type:Number, max:5, min:0}}],
   level: Number
 });
 
@@ -46,6 +47,7 @@ UserSchema
       'name': this.name,
       'xp': this.xp,
       'level': this.level,
+      'reviews': this.reviews,
       'role': this.role
     };
   });
