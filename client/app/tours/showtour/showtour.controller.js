@@ -19,6 +19,14 @@ angular.module('wanderlustApp')
       };
       GoExplore.submitReview($stateParams.tourId, reviewData, callback);      
     };
+    $scope.completeTask = function(spot){
+      var points = spot.points;
+      spot.points='';
+      if(points && !spot.complete){
+        GoExplore.completeTask(points);
+      }
+      spot.complete = true;
+    };
   })
 
 
@@ -39,6 +47,25 @@ angular.module('wanderlustApp')
       .error(function(data){
         console.log("fail: ",data);
       });
+    };
+
+    var completeTask = function(pointsEarned, callback){
+      User.get().$get().then(function(userData){
+        $http({
+          method:'POST',
+          url: '/api/points/'+userData._id,
+          data: {
+            user: userData,
+            points: pointsEarned
+          }
+        })
+        .success(function(data){
+          if(callback){
+            callback(data);
+          }
+        });
+      });
+
     };
 
     var submitReview = function(tourId, reviewObject, callback){
@@ -63,6 +90,7 @@ angular.module('wanderlustApp')
     return {
       submitReview: submitReview,
       getTour: getTour,
+      completeTask: completeTask,
       glhf: glhf
     };
   });
