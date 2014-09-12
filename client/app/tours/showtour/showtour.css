@@ -67,3 +67,6 @@
   border-top: 1px solid #ddd;
 }
 
+.complete {
+  background-color: lightGrey;
+}

@@ -3,7 +3,7 @@
 <header class="hero-unit" id="banner" ng-controller="ShowtourCtrl">
   <div class="container">
     <h1>{{tours.tour.title}} - by {{tours.author}} - {{tours.tour.duration}}</h1>
-    <img class="map" src="assets/images/Mission.png" alt="Mission District">
+    <img class="map" src="assets/images/{{tours.tour.neighborhood[0]}}.png" alt="Mission District">
     <p class="tour_header">{{tours.description}}</p>
   </div>
 </header>
@@ -11,8 +11,8 @@
 <div class="container">
   <div class="row">
 
-      <table class="table table-hover spotsContainer" ng-repeat="spot in tours.tour.spots">
-        <tr>
+      <table class="table table-hover spotsContainer" ng-repeat="spot in tours.tour.spots" ng-class="{'complete': spot.complete}">
+        <tr ng-click="completeTask(spot)">
           <th>
             <!-- the following three tags are directives from tours.controller.js -->
             <tag-Price></tag-Price>
