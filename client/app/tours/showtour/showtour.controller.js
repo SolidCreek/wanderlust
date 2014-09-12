@@ -2,6 +2,26 @@
 
 angular.module('wanderlustApp')
 
+
+  .controller('ShowtourCtrl', function ($scope, GoExplore, $stateParams) {
+    $scope.tours = {};
+    var callback = function(data){
+       if(data){
+         $scope.tours = data;
+       }
+      };
+    GoExplore.getTour($stateParams.tourId, callback)
+    $scope.glhf = GoExplore.glhf;
+    $scope.submitReview = function(){
+      var reviewData = {
+        body: $scope.reviewBody,
+        rating: $scope.score
+      };
+      GoExplore.submitReview($stateParams.tourId, reviewData, callback);      
+    };
+  })
+
+
   .factory('GoExplore', function($http, User){
     //this function activates on ng-click for the button "Go Exploring!"
     var glhf = function(){
@@ -14,7 +34,10 @@ angular.module('wanderlustApp')
         url: '/api/tour/'+tourId
       })
       .success(function(data){
-          callback(data);
+        callback(data);
+      })
+      .error(function(data){
+        console.log("fail: ",data);
       });
     };
 
@@ -30,7 +53,7 @@ angular.module('wanderlustApp')
             }
           })
           .success(function(data){
-              callback(data);
+              callback({tour: data});
           });
         } else {
           callback(null);
@@ -41,24 +64,5 @@ angular.module('wanderlustApp')
       submitReview: submitReview,
       getTour: getTour,
       glhf: glhf
-    };
-  })
-
-  .controller('ShowtourCtrl', function ($scope, GoExplore, $stateParams) {
-    GoExplore.getTour($stateParams.tourId, function(data){
-      $scope.tours = data;
-    });
-    $scope.glhf = GoExplore.glhf;
-    $scope.submitReview = function(){
-      var reviewData = {
-        body: $scope.reviewBody,
-        rating: $scope.score
-      };
-      var callback = function(data){
-       if(data){
-         $scope.tours = data;
-       }
-      };
-      GoExplore.submitReview($stateParams.tourId, reviewData, callback);      
     };
   });

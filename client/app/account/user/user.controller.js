@@ -19,7 +19,8 @@ angular.module('wanderlustApp')
     };
     //get user data from server
     getUser.getData($stateParams.userId, function(data){
+      console.log(data);
       $scope.user = data;
-      $scope.user.percentComplete = calculatePercentage($scope.user.profile.xp, $scope.user.profile.xpneeded);
+      $scope.user.percentComplete = calculatePercentage($scope.user.profile.xp, $scope.user.xpneeded);
     });
   });

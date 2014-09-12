@@ -1,8 +1,8 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<header class="hero-unit" id="banner">
+<header class="hero-unit" id="banner" ng-controller="ShowtourCtrl">
   <div class="container">
-    <h1>{{tours.title}} - by {{tours.author}} - {{tours.duration}}</h1>
+    <h1>{{tours.tour.title}} - by {{tours.author}} - {{tours.tour.duration}}</h1>
     <img class="map" src="assets/images/Mission.png" alt="Mission District">
     <p class="tour_header">{{tours.description}}</p>
   </div>
@@ -11,14 +11,14 @@
 <div class="container">
   <div class="row">
 
-      <table class="table table-hover spotsContainer" ng-repeat="spot in tours.spots">
+      <table class="table table-hover spotsContainer" ng-repeat="spot in tours.tour.spots">
         <tr>
           <th>
             <!-- the following three tags are directives from tours.controller.js -->
             <tag-Price></tag-Price>
             <tag-Camera></tag-Camera>
             <tag-Tree></tag-Tree></th>
-          <th class="spotInfo"> {{spot.info}} </th>
+          <th class="spotInfo"> {{spot.task}} </th>
           <th class="spotPoints"> {{spot.points}} </th>
         </tr>
       </table>
@@ -51,10 +51,13 @@
     </div>
   </form>
   
-  <div class="reviewsContainer" ng-repeat="review in tours.reviews">
-    <span>{{review.body}}</span>
-    <span>{{review.rating}}</span>
-    <a href="/user/{{review.reviewer.id}}">{{review.reviewer.name}}</a>
+  <div class="reviewsContainer" ng-repeat="review in tours.tour.reviews">
+  <div class="input-group input-group-lg">
+    <span class="input-group-addon">{{review.rating}}</span>
+    <span type="text" class="form-control">User: <a href="/user/{{review.reviewer.id}}">{{review.reviewer.name}}</a></span>
+    <span type="text" class="form-control">{{review.body}}</span>
+  </div>
+  <br>
   </div>
 </div>
 
