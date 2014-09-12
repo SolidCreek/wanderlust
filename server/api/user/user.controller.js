@@ -5,6 +5,7 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var Tour = require('../tour/tour.model');
+var fs = require('fs');
 
 var levelTable = {
   1: 0,
@@ -20,29 +21,32 @@ var levelTable = {
 }
 
 exports.points = function(req, res){
-  
-  var user = {
-    id: req.user.id,
-    level: req.user.level,
-    xp: req.user.xp
-  }
-  
-  var xpGained = req.task.xp;
-
 
   var levelUp = function(user){
     var level = user.level+1
     var xp = user.xp - levelTable[level];
-    User.findByIdAndUpdate(user.id, {level: level, xp: xp}).exec()
+    User.findByIdAndUpdate(user.id, {level: level}).exec()
       .then(function(user){
         res.json(user);
       });
   };
   
-  if(user.xp + xpGained >= levelTable[user.level + 1]){
-    levelUp(user);
-  }
+  console.log(req.body);
 
+  var user = {
+    id: req.body.user._id,
+    level: req.body.user.level,
+    xp: req.body.user.xp
+  }
+  
+  var xpGained = +user.xp + +req.body.points;
+
+  User.findByIdAndUpdate(user.id, {xp: xpGained}).exec()
+    .then(function(foundUser){
+      if(xpGained >= levelTable[user.level + 1]){
+        levelUp(user);
+      }
+    });
 };
 
 
@@ -108,8 +112,12 @@ exports.show = function (req, res, next) {
           xpneeded: levelTable[user.profile.level],
           tours: tours
         }
-        console.log(userData)
-        res.json(200, userData);
+        var level = userData.profile.level
+        fs.readFile('../../levelbadges/level' +level+'.png', function(err, data){
+          if(err) throw err;
+          userData.badge = '' + data;
+          res.json(200, userData);
+        })
       }); 
   });
 };
