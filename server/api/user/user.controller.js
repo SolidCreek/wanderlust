@@ -21,6 +21,8 @@ var levelTable = {
 
 exports.points = function(req, res){
   
+  console.log(req);
+
   var user = {
     id: req.user.id,
     level: req.user.level,
