@@ -7,30 +7,43 @@ var jwt = require('jsonwebtoken');
 var Tour = require('../tour/tour.model');
 
 
+// exports.points = function(req, res){
+  
+//   var user = {
+//     id: req.user.id,
+//     level: req.user.level,
+//     xp: req.user.xp
+//   }
+  
+//   var xpGained = req.task.xp;
 
-// var levelUp = function(req, res){
 //   var levelTable = {
 //     1: 0,
 //     2: 100,
-//     3: 300,
-//     4: 600,
-//     5: 1000,
-//     6: 1500,
-//     7: 2100,
-//     8: 2800,
-//     9: 3600,
-//     10: 4500
+//     3: 200,
+//     4: 300,
+//     5: 400,
+//     6: 500,
+//     7: 600,
+//     8: 700,
+//     9: 800,
+//     10: 900
 //   }
 
-//   User.findByIdAndUpdate({level: level+1})
-//   var level = 
-//   var xp = user.profile.xp - levelTable[level];
-//   var userObj = {
-//     profile: user.profile,
-//     level: level,
-//     xp: xp
+//   var levelUp = function(user){
+//     var level = user.level+1
+//     var xp = user.xp - levelTable[level];
+//     User.findByIdAndUpdate(user.id, {{level: level, xp: xp}}).exec()
+//       .then(function(user){
+//         res.json(user);
+//       });
+//   };
+  
+//   if(user.xp + xpGained >= levelTable[user.level + 1]){
+//     levelUp(user);
 //   }
-// }
+
+// };
 
 
 

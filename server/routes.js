@@ -20,7 +20,7 @@ module.exports = function(app) {
     tour.show(req, res);
   });
 
-  app.post('/api/review/:id', function(req, res){
+  app.post('/api/tour/:id', function(req, res){
     tour.addReview(req, res);
   });
 

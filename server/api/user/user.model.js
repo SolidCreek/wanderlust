@@ -20,7 +20,7 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   // github: {}
-  points: Number,
+  xp: Number,
   level: Number
 });
 
@@ -44,7 +44,7 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
-      'xp': this.points,
+      'xp': this.xp,
       'level': this.level,
       'role': this.role
     };

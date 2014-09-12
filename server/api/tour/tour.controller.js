@@ -69,14 +69,16 @@ exports.destroy = function(req, res) {
 
 //Adds a review to a tour
 exports.addReview = function(req,res) {
-  console.log(req)
-  var reviewerID = {reviewer: req.userId};
-  var review = _.merge(req.body.data.review, reviewerID);
-  Tour.findByIdAndUpdate(req.params.id,{$push:{reviews:review}},function(err,tour){
-    if(err) {return handleError(res,err);}
-    if(!tour) {return res.send(404);}
-    res.send(201, tour);
-  });
+  User.findById(req.body.userId).exec()
+    .then(function(user){
+      var reviewerID = {reviewer: {name: user.name, id: req.body.userId}};
+      var review = _.merge(req.body.review, reviewerID);
+      Tour.findByIdAndUpdate(req.params.id,{$push:{reviews:review}},function(err,tour){
+        if(err) {return handleError(res,err);}
+        if(!tour) {return res.send(404);}
+        res.send(201, tour);
+      });
+    });
 };
 
 
