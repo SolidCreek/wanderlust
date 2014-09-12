@@ -19,10 +19,8 @@ angular.module('wanderlustApp')
     };
 
     var submitReview = function(tourId, reviewObject, callback){
-      console.log("Submitted!");
       User.get().$get().then(function(data){
         if(reviewObject.body && reviewObject.rating && data._id){
-          console.log("Going to the server!");
           $http({
             method: 'POST',
             url: '/api/tour/'+tourId,
@@ -35,30 +33,22 @@ angular.module('wanderlustApp')
               callback(data);
           });
         } else {
-          console.log("tourId: ", tourId);
-          console.log("reviewObject: ", reviewObject);
-          console.log("data: ", data);
           callback(null);
       }
       });
-      
     };
-
     return {
       submitReview: submitReview,
       getTour: getTour,
       glhf: glhf
-      
     };
   })
 
   .controller('ShowtourCtrl', function ($scope, GoExplore, $stateParams) {
     $scope.glhf = GoExplore.glhf;
-
     GoExplore.getTour($stateParams.tourId, function(data){
       $scope.tours = data;
     });
-
     $scope.submitReview = function(){
       var reviewData = {
         body: $scope.reviewBody,

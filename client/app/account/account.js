@@ -14,7 +14,7 @@ angular.module('wanderlustApp')
         controller: 'SignupCtrl'
       })
       .state('user', {
-        url: '/user/:userId',
+        url: '/user?userId',
         templateUrl: 'app/account/user/user.html',
         controller: 'UserCtrl',
         authenticate: true

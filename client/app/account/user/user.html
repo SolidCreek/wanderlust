@@ -1,5 +1,44 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
+  <div class="input-group input-group-lg">
+    <span class="input-group-addon">{{user.levelBadge}}</span>
+    <span type="text" class="form-control">{{user.name}}</span>
+  </div>
+  <br>
+  <div class="progress">
+    <!-- <div>Progress to next Level</div> -->
+    <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="{{user.currentLevelValue}}" style="width: {{user.percentComplete}}%">
+      <span >{{user.expEarned}} of {{user.totalExp}} Points towatds next level </span>
+    </div>
 
+  </div>
+  <div class="panel panel-primary">
+  <!-- Default panel contents -->
+  <div class="panel-heading">My Tours</div>
+  <!-- List group -->
+  <ul class="list-group" ng-repeat="tour in user.tours">
+    <li class="list-group-item">
+      <div class="input-group input-group-mid">
+        <span class="input-group-addon"><a href="/tours/showtour/{{tour.id}}">{{tour.title}}</a></span>
+        <span type="text" class="form-control">{{tour.description}}</span>
+      </div>
+    </li>
+  </ul>
+  <div ng-if="!user.tours" class="alert alert-info" role="alert">Opps no tours yet, <a href="/tours/createtour">go make a tour!</a></div>
+</div>
+<div class="panel panel-primary">
+  <!-- Default panel contents -->
+  <div class="panel-heading">My Reviews</div>
+  <!-- List group -->
+  <ul class="list-group" ng-repeat="review in user.reviews">
+    <li class="list-group-item">
+      <div class="input-group input-group-mid">
+        <span class="input-group-addon">Rating: {{review.rating}}</span>
+        <span type="text" class="form-control">{{review.body}}</span>
+      </div>
+    </li>
+  </ul>
+  <div ng-if="!user.reviews" class="alert alert-info" role="alert">Opps no reviews yet, <a href="/tours">go make a review!</a></div>
+</div>
 </div>
