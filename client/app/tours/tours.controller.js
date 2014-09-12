@@ -43,7 +43,9 @@ angular.module('wanderlustApp')
     }
   })
 
-  .controller('ToursCtrl', function ($scope, $location, $http, httpGET) {
+  .controller('ToursCtrl', function ($scope, $location, $http, httpGET, $stateParams) {
+    console.log('PARAMS', $stateParams);
+    $scope.tourFilter = $stateParams.filter || '';
     
     httpGET.getData(function(data){
       $scope.tours = data;
