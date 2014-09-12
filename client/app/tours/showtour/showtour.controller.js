@@ -45,10 +45,10 @@ angular.module('wanderlustApp')
   })
 
   .controller('ShowtourCtrl', function ($scope, GoExplore, $stateParams) {
-    $scope.glhf = GoExplore.glhf;
     GoExplore.getTour($stateParams.tourId, function(data){
       $scope.tours = data;
     });
+    $scope.glhf = GoExplore.glhf;
     $scope.submitReview = function(){
       var reviewData = {
         body: $scope.reviewBody,
