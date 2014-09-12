@@ -54,6 +54,7 @@
   <div class="reviewsContainer" ng-repeat="review in tours.reviews">
     <span>{{review.body}}</span>
     <span>{{review.rating}}</span>
+    <a href="/user/{{review.reviewer.id}}">{{review.reviewer.name}}</a>
   </div>
 </div>
 
