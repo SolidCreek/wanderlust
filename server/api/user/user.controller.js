@@ -6,44 +6,44 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var Tour = require('../tour/tour.model');
 
+var levelTable = {
+  1: 0,
+  2: 100,
+  3: 200,
+  4: 300,
+  5: 400,
+  6: 500,
+  7: 600,
+  8: 700,
+  9: 800,
+  10: 900
+}
 
-// exports.points = function(req, res){
+exports.points = function(req, res){
   
-//   var user = {
-//     id: req.user.id,
-//     level: req.user.level,
-//     xp: req.user.xp
-//   }
+  var user = {
+    id: req.user.id,
+    level: req.user.level,
+    xp: req.user.xp
+  }
   
-//   var xpGained = req.task.xp;
+  var xpGained = req.task.xp;
 
-//   var levelTable = {
-//     1: 0,
-//     2: 100,
-//     3: 200,
-//     4: 300,
-//     5: 400,
-//     6: 500,
-//     7: 600,
-//     8: 700,
-//     9: 800,
-//     10: 900
-//   }
 
-//   var levelUp = function(user){
-//     var level = user.level+1
-//     var xp = user.xp - levelTable[level];
-//     User.findByIdAndUpdate(user.id, {{level: level, xp: xp}}).exec()
-//       .then(function(user){
-//         res.json(user);
-//       });
-//   };
+  var levelUp = function(user){
+    var level = user.level+1
+    var xp = user.xp - levelTable[level];
+    User.findByIdAndUpdate(user.id, {level: level, xp: xp}).exec()
+      .then(function(user){
+        res.json(user);
+      });
+  };
   
-//   if(user.xp + xpGained >= levelTable[user.level + 1]){
-//     levelUp(user);
-//   }
+  if(user.xp + xpGained >= levelTable[user.level + 1]){
+    levelUp(user);
+  }
 
-// };
+};
 
 
 
@@ -105,6 +105,7 @@ exports.show = function (req, res, next) {
       .then(function(tours){
         var userData = {
           profile: user.profile,
+          xpneeded: levelTable[user.profile.level],
           tours: tours
         }
         console.log(userData)
