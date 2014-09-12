@@ -69,6 +69,7 @@ exports.destroy = function(req, res) {
 
 //Adds a review to a tour
 exports.addReview = function(req,res) {
+  var userReview = req.body.review;
   User.findByIdAndUpdate(req.body.userId, {$push:{reviews: userReview}}).exec()
     .then(function(user){
       var reviewerID = {reviewer: {name: user.name, id: req.body.userId}};
