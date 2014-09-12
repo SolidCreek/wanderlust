@@ -57,28 +57,18 @@ angular.module('wanderlustApp')
 
     GoExplore.getTour($stateParams.tourId, function(data){
       $scope.tours = data;
-      console.log("Hi");
-      console.log($scope.tours);
     });
 
-    var reviewObject = 
-
     $scope.submitReview = function(){
-      GoExplore.submitReview($stateParams.tourId, {
-                                                    body: $scope.reviewBody,
-                                                    rating: $scope.score
-                                                  }, 
-                                                   function(data){
-                                                     if(data){
-                                                       $scope.tours = data;
-                                                     }
-                                                   }
-      );      
+      var reviewData = {
+        body: $scope.reviewBody,
+        rating: $scope.score
+      };
+      var callback = function(data){
+       if(data){
+         $scope.tours = data;
+       }
+      };
+      GoExplore.submitReview($stateParams.tourId, reviewData, callback);      
     };
-
-
-
-
-    
-
   });
