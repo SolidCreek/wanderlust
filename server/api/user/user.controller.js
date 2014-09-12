@@ -21,31 +21,32 @@ var levelTable = {
 }
 
 exports.points = function(req, res){
-  
-  console.log(req);
-
-  var user = {
-    id: req.user.id,
-    level: req.user.level,
-    xp: req.user.xp
-  }
-  
-  var xpGained = req.task.xp;
-
 
   var levelUp = function(user){
     var level = user.level+1
     var xp = user.xp - levelTable[level];
-    User.findByIdAndUpdate(user.id, {level: level, xp: xp}).exec()
+    User.findByIdAndUpdate(user.id, {level: level}).exec()
       .then(function(user){
         res.json(user);
       });
   };
   
-  if(user.xp + xpGained >= levelTable[user.level + 1]){
-    levelUp(user);
-  }
+  console.log(req.body);
 
+  var user = {
+    id: req.body.user._id,
+    level: req.body.user.level,
+    xp: req.body.user.xp
+  }
+  
+  var xpGained = +user.xp + +req.body.points;
+
+  User.findByIdAndUpdate(user.id, {xp: xpGained}).exec()
+    .then(function(foundUser){
+      if(xpGained >= levelTable[user.level + 1]){
+        levelUp(user);
+      }
+    });
 };
 
 
