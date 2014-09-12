@@ -13,6 +13,12 @@ angular.module('wanderlustApp')
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupCtrl'
       })
+      .state('user', {
+        url: '/user/:userId',
+        templateUrl: 'app/account/user/user.html',
+        controller: 'UserCtrl',
+        authenticate: true
+      })
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/account/settings/settings.html',

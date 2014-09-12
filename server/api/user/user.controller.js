@@ -6,6 +6,48 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var Tour = require('../tour/tour.model');
 
+var levelTable = {
+  1: 0,
+  2: 100,
+  3: 200,
+  4: 300,
+  5: 400,
+  6: 500,
+  7: 600,
+  8: 700,
+  9: 800,
+  10: 900
+}
+
+exports.points = function(req, res){
+  
+  var user = {
+    id: req.user.id,
+    level: req.user.level,
+    xp: req.user.xp
+  }
+  
+  var xpGained = req.task.xp;
+
+
+  var levelUp = function(user){
+    var level = user.level+1
+    var xp = user.xp - levelTable[level];
+    User.findByIdAndUpdate(user.id, {level: level, xp: xp}).exec()
+      .then(function(user){
+        res.json(user);
+      });
+  };
+  
+  if(user.xp + xpGained >= levelTable[user.level + 1]){
+    levelUp(user);
+  }
+
+};
+
+
+
+
 var validationError = function(res, err) {
   return res.json(422, err);
 };
@@ -36,17 +78,42 @@ exports.create = function (req, res, next) {
 };
 
 /**
+ * Get the all the tours created by the current user
+ */
+
+// var showTours = function(userId) {
+
+//   // if(!req.user._id.equals(req.params.id)) {return res.send(401);}
+
+//   return Tour.find({author: userId}) 
+
+//   // function(err, tours){
+//   //   if(err) return next(err);
+//   //   res.json(tours);
+//   // });
+// };
+
+/**
  * Get a single user
  */
 exports.show = function (req, res, next) {
   var userId = req.params.id;
-
   User.findById(userId, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
-    res.json(user.profile);
+    Tour.find({author: userId}).exec()
+      .then(function(tours){
+        var userData = {
+          profile: user.profile,
+          xpneeded: levelTable[user.profile.level],
+          tours: tours
+        }
+        console.log(userData)
+        res.json(200, userData);
+      }); 
   });
 };
+
 
 /**
  * Deletes a user
@@ -90,23 +157,14 @@ exports.me = function(req, res, next) {
   }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
     if (err) return next(err);
     if (!user) return res.json(401);
+    console.log(user)
     res.json(user);
   });
 };
 
-/**
- * Get the all the tours created by the current user
- */
 
-exports.showTours = function(req, res, next) {
+//Calculate level and points
 
-  if(!req.user._id.equals(req.params.id)) {return res.send(401);}
-
-  Tour.find({author: req.params.id}, function(err, tours){
-    if(err) return next(err);
-    res.json(tours);
-  });
-};
 
 
 /**

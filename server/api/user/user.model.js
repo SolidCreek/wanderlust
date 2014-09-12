@@ -20,7 +20,15 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   // github: {}
-  //add points
+  xp: {
+    type: Number,
+    default: 0
+  },
+  reviews: [{body: String, rating: {type:Number, max:5, min:0}}],
+  level: {
+    type: Number,
+    default: 1
+  }
 });
 
 /**
@@ -43,8 +51,10 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
+      'xp': this.xp,
+      'level': this.level,
+      'reviews': this.reviews,
       'role': this.role
-      //points
     };
   });
 
