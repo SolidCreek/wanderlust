@@ -6,6 +6,7 @@
 
 var errors = require('./components/errors');
 var tour = require('./api/tour/tour.controller');
+var user = require('./api/user/user.controller');
 
 module.exports = function(app) {
 
@@ -22,6 +23,10 @@ module.exports = function(app) {
 
   app.post('/api/tour/:id', function(req, res){
     tour.addReview(req, res);
+  });
+
+  app.get('/api/user/:id', function(req, res){
+    user.show(req, res);
   });
 
   // All undefined asset or api routes should return a 404

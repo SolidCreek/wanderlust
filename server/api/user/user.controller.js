@@ -78,6 +78,22 @@ exports.create = function (req, res, next) {
 };
 
 /**
+ * Get the all the tours created by the current user
+ */
+
+// var showTours = function(userId) {
+
+//   // if(!req.user._id.equals(req.params.id)) {return res.send(401);}
+
+//   return Tour.find({author: userId}) 
+
+//   // function(err, tours){
+//   //   if(err) return next(err);
+//   //   res.json(tours);
+//   // });
+// };
+
+/**
  * Get a single user
  */
 exports.show = function (req, res, next) {
@@ -85,8 +101,15 @@ exports.show = function (req, res, next) {
   User.findById(userId, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
-    console.log(user.profile)
-    res.json(user.profile);
+    Tour.find({author: userId}).exec()
+      .then(function(tours){
+        var userData = {
+          profile: user.profile,
+          tours: tours
+        }
+        console.log(userData)
+        res.json(200, userData);
+      }); 
   });
 };
 
@@ -133,23 +156,11 @@ exports.me = function(req, res, next) {
   }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
     if (err) return next(err);
     if (!user) return res.json(401);
+    console.log(user)
     res.json(user);
   });
 };
 
-/**
- * Get the all the tours created by the current user
- */
-
-exports.showTours = function(req, res, next) {
-
-  if(!req.user._id.equals(req.params.id)) {return res.send(401);}
-
-  Tour.find({author: req.params.id}, function(err, tours){
-    if(err) return next(err);
-    res.json(tours);
-  });
-};
 
 //Calculate level and points
 
