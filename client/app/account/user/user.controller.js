@@ -21,15 +21,15 @@ angular.module('wanderlustApp')
     getUser.getData($stateParams.userId, function(data){
       $scope.user = data;
     });
-    $scope.user = {
-      name: 'Geoff',
-      levelBadge: '7',
-      expEarned: 172,
-      totalExp: 600,
-      reviews: [{body:"this tour was awesome", rating: 4, reviewer: {id:5, name:"Dan"}}],
-      tours: [{title: "Best Tour Ever", description: "This is not the greatest tour in the world, it is only a tribute.", id: "5412647ea5ed590000b7b828"}]
-    };
-    $scope.user.percentComplete = calculatePercentage($scope.user.expEarned, $scope.user.totalExp);
+    // $scope.user = {
+    //   name: 'Geoff',
+    //   levelBadge: '7',
+    //   expEarned: 172,
+    //   totalExp: 600,
+    //   reviews: [{body:"this tour was awesome", rating: 4, reviewer: {id:5, name:"Dan"}}],
+    //   tours: [{title: "Best Tour Ever", description: "This is not the greatest tour in the world, it is only a tribute.", id: "5412647ea5ed590000b7b828"}]
+    // };
+    $scope.user.percentComplete = calculatePercentage($scope.user.xp, $scope.user.xpneeded);
   });
 
 //current level value
