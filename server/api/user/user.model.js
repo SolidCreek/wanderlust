@@ -20,9 +20,15 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   // github: {}
-  xp: Number,
+  xp: {
+    type: Number,
+    default: 0
+  },
   reviews: [{body: String, rating: {type:Number, max:5, min:0}}],
-  level: Number
+  level: {
+    type: Number,
+    default: 1
+  }
 });
 
 /**
