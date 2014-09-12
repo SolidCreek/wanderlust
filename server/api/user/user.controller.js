@@ -109,11 +109,12 @@ exports.show = function (req, res, next) {
       .then(function(tours){
         var userData = {
           profile: user.profile,
-          xpneeded: levelTable[user.profile.level],
+          xpneeded: levelTable[user.profile.level+1],
           tours: tours
         }
         var level = userData.profile.level
-        fs.readFile('../../levelbadges/level' +level+'.png', function(err, data){
+        console.log(level);
+        fs.readFile(__dirname + '/../../levelbadges/level' +level+'.png', function(err, data){
           if(err) throw err;
           userData.badge = '' + data;
           res.json(200, userData);
