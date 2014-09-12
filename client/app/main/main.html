@@ -3,13 +3,116 @@
 <div class="main container">
   <div class="row">
     <div class="col-md-9 col-centered">
-      <h1 class="header text-centered">Cure your Wanderlust.</h1>
-      <h2 class="tag text-centered">Use Wanderlust to curate your city’s hidden gems for others to fall in love with or cure your wanderlust by exploring the city through a new perspective.</h2>
+      <h1 class="header text-centered">Select a district to tour.</h1>
+      <h2 class="tag text-centered" ></h2>
 
-    <form class="form-location" ng-submit="navToToursByLocation()">
+      <script>
+        var selected = {
+          value: '',
+          set: function(value){
+            this.value = d3Interactor.selected = value;
+            d3.select('.tag')[0][0].textContent = this.value;
+          },
+          triggerFlag: function(){
+            d3Interactor.flag = true;
+          }
+        };
+
+        var destroyMap = function(){
+          d3.select('.selectionMapContainer')
+            .remove();
+          selected.triggerFlag();
+        };
+
+        var fillTransparent = function(){
+          var data = d3.select(this).attr('d');
+
+          for(var key in neighborhoodSVGData){
+            if(data === neighborhoodSVGData[key]){
+              selected.set(key);
+              break;
+            }
+          }
+
+          d3.select(this)
+            .attr('fill', 'transparent');
+        };
+
+        var fillGrey = function(){
+          selected.set('');
+          d3.select(this)
+            .transition()
+            .duration(100)
+            .attr('fill', 'DarkGrey');
+        };
+
+        var selectDistrict = function(){
+          var data = d3.select(this).attr('d');
+
+          d3.selectAll('path')[0].forEach(function(path){
+            if(path.attributes[0].value !== data){
+              d3.select(path)
+                .transition()
+                .delay(100)
+                .duration(500)
+                .style('opacity', 0);
+            }else{
+              d3.select(path)
+                .transition()
+                .attr('fill', 'black')
+                .transition()
+                .duration(500)
+                .style('opacity', 0);
+            }
+            d3.selectAll('path')
+              .on('mouseenter', null)
+              .on('mouseleave', null)
+              .on('click', null);
+          });
+
+          d3.select('img')
+            .transition()
+            .delay(85)
+            .duration(490)
+            .style('opacity', 0);
+
+          setTimeout(function(){
+            destroyMap();
+          }, 650);
+        };
+
+        // container to hold map and svgs. used for consistant css positioning
+        var selectionMapContainer = d3.select('body').append('div')
+          .attr('class', 'selectionMapContainer');
+
+        // create svg container
+        var svgContainer = d3.select('.selectionMapContainer').append('svg')
+          .attr('width',730)
+          .attr('height',580)
+          .attr('class', 'svgContainer');
+
+        // create bgMap and append to container
+        var map = d3.select('.selectionMapContainer').append('img')
+          .attr('src', 'assets/images/sf.png')
+          .attr('class', 'backgroundMap')
+          .attr('alt', 'backgroundMap');
+
+        // create neighborhood svgs from data and append to container
+        for(var key in neighborhoodSVGData){
+          svgContainer.append('path')
+            .attr('d', neighborhoodSVGData[key])
+            .attr('fill','DarkGrey')
+            .on('mouseenter', fillTransparent)
+            .on('mouseleave', fillGrey)
+            .on('click', selectDistrict);
+        }
+
+      </script>
+
+    <!-- <form class="form-location" ng-submit="navToToursByLocation()">
       <label class="label-location">Where to?</label><br>
       <input class="input-location" ng-model="location" placeholder="San Francisco">
-    </form>
+    </form> -->
     </div>
   </div>
 </div>
