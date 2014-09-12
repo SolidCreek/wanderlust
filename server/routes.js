@@ -20,6 +20,10 @@ module.exports = function(app) {
     tour.show(req, res);
   });
 
+  app.post('/api/tour/:id', function(req, res){
+    tour.addReview(req, res);
+  });
+
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get(errors[404]);
